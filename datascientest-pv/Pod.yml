@@ -1,0 +1,18 @@
+apiVersion: v1 # The api version used to create Pod objects
+kind: Pod # type of object we want to create
+metadata:
+  name: datascientest-pod # Pod name
+spec:
+  containers:
+    - name: nginx # container to create for our Pod
+      image: nginx # the image to be used to create the container
+      imagePullPolicy: IfNotPresent # Download image only if not present
+      volumeMounts:
+        - name: datascientest-volume
+          mountPath: /usr/share/nginx/html/ # Directory in the container that will be mounted on the volume
+      ports:
+        - containerPort: 80 # Container listening port
+  volumes:
+    - name: datascientest-volume # Volume name for persistent data storage
+      persistentVolumeClaim:
+        claimName: pvc-datascientest # Name of the PVC to be used
